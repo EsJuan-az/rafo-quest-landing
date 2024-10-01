@@ -1,7 +1,11 @@
-export default function Home() {
+
+
+export default async function Home() {
+
   return (
-    <div>
-      <h1 className="">Hola</h1>
-    </div>
+    <>
+      {/* <h1 className={`${pixel.className} text-black text-5xl`}>Rafo Quest</h1> */}
+      
+    </>
   )
 }

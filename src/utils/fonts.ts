@@ -1,10 +1,10 @@
-import { Montserrat, Jacquard_24 } from "next/font/google";
+import { Montserrat, Pixelify_Sans } from "next/font/google";
 export const montserrat = Montserrat({
   weight: ["400"],
   subsets: ['latin']
 
 });
-export const jacquard = Jacquard_24({
+export const pixel = Pixelify_Sans({
   weight: ["400"],
   subsets: ['latin']
 });
