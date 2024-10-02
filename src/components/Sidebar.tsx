@@ -5,7 +5,6 @@ import {
   FaArrowRightFromBracket,
 } from "react-icons/fa6";
 import withLinkTooltip from "./utils/withLinkTooltip";
-import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Claims } from "@auth0/nextjs-auth0";
 
@@ -38,8 +37,8 @@ export default function Sidebar({ user }: SidebarProps) {
   const ProfileLink = withLinkTooltip(
     () => (
       <Avatar>
-        <AvatarImage src={user?.picture} />
-        <AvatarFallback>{user?.nickname[0].toUpperCase()}</AvatarFallback>
+        <AvatarImage src={user?.avatar} />
+        <AvatarFallback>{user?.name && user?.name[0].toUpperCase()}</AvatarFallback>
       </Avatar>
     ),
     <p className="font-bold">Profile</p>,
@@ -48,14 +47,12 @@ export default function Sidebar({ user }: SidebarProps) {
   return (
     <nav
       className="bg-primary h-screen w-14 rounded-tr-md rounded-br-md py-2
-      flex flex-col items-center justify-around"
+      flex flex-col items-center justify-around fixed top-0 left-0 z-30"
     >
       <HomeLink className="fill-secondary size-8" />
 
       <section className="flex flex-col h-1/3 justify-around items-center">
-        <Link href="/books">
-          <BookLink className="fill-secondary size-8" />
-        </Link>
+        <BookLink className="fill-secondary size-8" />
         {user ? (
           <>
             <LogoutLink className="fill-secondary size-8" />
