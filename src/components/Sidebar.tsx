@@ -35,7 +35,6 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ user }: SidebarProps) {
-  console.log(user);
   const ProfileLink = withLinkTooltip(
     () => (
       <Avatar>
