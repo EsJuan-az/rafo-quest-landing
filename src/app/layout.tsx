@@ -32,7 +32,7 @@ export default async function RootLayout({
           <body className={`${montserrat.className} antialiased bg-background`}>
             <div className="">
               <Sidebar user={user}/>
-              <main className="ml-11 relative">{children}</main>
+              <main className="ml-16 relative">{children}</main>
               <Toaster />
             </div>
           </body>

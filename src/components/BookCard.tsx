@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { FaSuitcase, FaCrown, FaAddressBook, FaXmark } from 'react-icons/fa6';
-import withTooltip from './utils/withTooltip';
+import withTooltip from './utils/hoc/withTooltip';
 import { capitalize } from '@/utils/general';
 import BookService from '@/services/book.service';
 export default function BookCard({ book, refresh }: { book: RafoBook, refresh: () => void }) {
