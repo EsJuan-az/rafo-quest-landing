@@ -81,3 +81,7 @@ export class HexGrass extends Hex {
 export class HexWater extends Hex{
   
 }
+
+export class HexDecoWay extends Hex{
+  
+}

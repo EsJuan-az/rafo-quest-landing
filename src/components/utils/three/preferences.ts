@@ -59,8 +59,12 @@ export const setMaterials = (Game: GameType) => {
           roughness: 0.3, 
         }),
         b: new THREE.MeshBasicMaterial({
-          color: 0xffffff, 
-          roughness: 0.3, 
+          color: 0xd12e2e, 
+          roughness: 0.3,
+        }),
+        c: new THREE.MeshBasicMaterial({
+          color: 0xd12e2e, 
+          roughness: 0.3,
         }),
       },
       bridgeFor: {
@@ -74,11 +78,31 @@ export const setMaterials = (Game: GameType) => {
           color: 0x2a9d8f, // Color base
           roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
         }),
+        b: new THREE.MeshStandardMaterial({
+          color: 0xd2e9af, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+        c: new THREE.MeshStandardMaterial({
+          color: 0x8cb055, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
       },
       water: {
         a: new THREE.MeshStandardMaterial({
           color: 0x219ebc, // Color base
           roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+      },
+      decoWay: {
+        b: new THREE.MeshBasicMaterial({
+          color: 0x861d1d, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+        b2: new THREE.MeshBasicMaterial({
+          color: 0xabaeb0, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+          transparent: true, // El objeto es transparente
+          opacity: 0.7, // Controla el grado de opacidad del objeto
         }),
       },
     },
@@ -104,10 +128,15 @@ export const setMeshes = (Game: GameType) => {
           thick: preferences.HEX_WAY_HEIGHT,
           material: Game.materials.hex.way.a,
         }),
-        b: new Hex(Game, 35, {
+        b: new Hex(Game, 34, {
           rad: preferences.HEX_WAY_RAD,
           thick: preferences.HEX_WAY_HEIGHT,
           material: Game.materials.hex.way.b,
+        }),
+        c: new Hex(Game, 34, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.way.c,
         }),
       },
       bridgeFor: {
@@ -118,10 +147,20 @@ export const setMeshes = (Game: GameType) => {
         }),
       },
       grass: {
-        a: new HexGrass(Game, 24, {
+        a: new HexGrass(Game, 27, {
           rad: 8,
           thick: preferences.HEX_GRASS_HEIGHT,
           material: Game.materials.hex.grass.a,
+        }),
+        b: new HexGrass(Game, 38, {
+          rad: 8,
+          thick: preferences.HEX_GRASS_HEIGHT,
+          material: Game.materials.hex.grass.b,
+        }),
+        c: new HexGrass(Game, 38, {
+          rad: 8,
+          thick: preferences.HEX_GRASS_HEIGHT,
+          material: Game.materials.hex.grass.c,
         }),
       },
       water: {
@@ -129,7 +168,19 @@ export const setMeshes = (Game: GameType) => {
           rad: 8,
           thick: preferences.HEX_WATER_HEIGHT,
           material: Game.materials.hex.water.a,
-        })
+        }),
+      },
+      decoWay: {
+        b: new HexWater(Game, 12, {
+          rad: 8,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.decoWay.b,
+        }),
+        b2: new HexWater(Game, 20, {
+          rad: 8,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.decoWay.b2,
+        }),
       }
     },
   };
