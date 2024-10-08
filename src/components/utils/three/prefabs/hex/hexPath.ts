@@ -1,14 +1,13 @@
-import { Constructor, DummyUpdate, GameType } from '../../types';
+import { Constructor, DummyUpdate, GameType } from "../../types";
 import * as THREE from "three";
 import { Hex, HexCheckPoint } from "./hex";
 import { Facing, getHexCurve, getHexLines, getHexRamp } from "./hexUtils";
-import config from '../../../../../../tailwind.config';
+import config from "../../../../../../tailwind.config";
 export enum HexPathAction {
   LINE = "line",
   CURVE = "curve",
   RAMP = "tamp",
 }
-
 
 export class HexPath {
   public Game: GameType;
@@ -18,13 +17,13 @@ export class HexPath {
   public chainedPaths: HexPath[] = [];
   public HexClass: Hex;
 
-  getChainedHexPath(Game: GameType, facing: Facing){
-    if(!this.chainEdge){
-      throw new Error('no chain edge');
+  getChainedHexPath(Game: GameType, facing: Facing) {
+    if (!this.chainEdge) {
+      throw new Error("no chain edge");
     }
     const instance = new HexPath(Game, this.chainEdge);
     instance.setHexClass(Game.meshes.hex.checkpoint);
-    instance.doHexLine(1, facing)
+    instance.doHexLine(1, facing);
     instance.setHexClass(Game.meshes.hex.debug);
     return instance;
   }
@@ -32,30 +31,35 @@ export class HexPath {
   constructor(Game: GameType, initialHex: DummyUpdate | undefined = undefined) {
     this.Game = Game;
     this.HexClass = Game.meshes.hex.debug;
-    if(initialHex){
+    if (initialHex) {
       this.path.push(initialHex);
-    }else{
-      this.path.push(Game.meshes.hex.checkpoint.dummy)
+    } else {
+      this.path.push(Game.meshes.hex.checkpoint.dummy);
     }
-    
   }
 
-  fixPathEnd(){
+  fixPathEnd() {
     this.chainable = this.hexAt(-1);
     return this;
   }
 
-  get chainEdge(): DummyUpdate | null{
+  get chainEdge(): DummyUpdate | null {
     return this.chainable;
   }
 
-  setHexClass(hc: Hex){
+  setHexClass(hc: Hex) {
     this.HexClass = hc;
     return this;
   }
 
   hexAt(index: number): DummyUpdate {
     const hex = this.path.at(index);
+    if (!hex) throw new Error("Hex doesnt exist");
+    return hex;
+  }
+  
+  decoHexAt(index: number): DummyUpdate {
+    const hex = this.decorativePath.at(index);
     if (!hex) throw new Error("Hex doesnt exist");
     return hex;
   }
@@ -111,11 +115,14 @@ export class HexPath {
     return this;
   }
 
-  addHexes(newHexes: DummyUpdate[]){
-    if(!this.chainEdge){
+  addHexes(newHexes: DummyUpdate[]) {
+    newHexes.forEach(({ update }) => update());
+    if (!this.chainEdge) {
       this.path = this.path.concat(newHexes);
-    }else{
+    } else {
       this.decorativePath = this.path.concat(newHexes);
     }
   }
+
+  drawOn()
 }

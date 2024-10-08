@@ -38,7 +38,7 @@ export const handleResize = ({
   }
 };
 
-export const setComponents = (Game: GameType) => {
+export const setComponents = async (Game: GameType) => {
   // --- Iluminación ---
   setLights(Game);
   setBgColor(Game);
@@ -46,7 +46,7 @@ export const setComponents = (Game: GameType) => {
   setOrbitControls(Game);
   // setGUI(Game);
   // --- Cargar Texturas ---
-  setMaterials(Game);
+  await setMaterials(Game);
   setMeshes(Game);
   // --- Crear la Componentes ---
   renderComponents(Game);

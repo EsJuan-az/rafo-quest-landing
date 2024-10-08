@@ -13,6 +13,14 @@ export interface GameType {
   lights: object;
   materials: {
     personaje: THREE.SpriteMaterial;
+    sprites: {
+      natural: {
+        a: THREE.SpriteMaterial[],
+      },
+      structures: {
+        a: THREE.SpriteMaterial[],
+      }
+    },
     hex: {
       debug: THREE.MeshStandardMaterial;
       checkpoint: THREE.MeshStandardMaterial;
@@ -21,13 +29,12 @@ export interface GameType {
         b: THREE.MeshStandardMaterial;
         c: THREE.MeshStandardMaterial;
         d: THREE.MeshStandardMaterial;
-        // e: THREE.MeshStandardMaterial;
-        // f: THREE.MeshStandardMaterial;
-        // g: THREE.MeshStandardMaterial;
-        // h: THREE.MeshStandardMaterial;
-        // i: THREE.MeshStandardMaterial;
-        // j: THREE.MeshStandardMaterial;
-        // k: THREE.MeshStandardMaterial;
+        e: THREE.MeshStandardMaterial;
+        f: THREE.MeshStandardMaterial;
+        g: THREE.MeshStandardMaterial;
+        h: THREE.MeshStandardMaterial;
+        i: THREE.MeshStandardMaterial;
+        j: THREE.MeshStandardMaterial;
         // l: THREE.MeshStandardMaterial;
       };
       bridgeFor: {
@@ -37,14 +44,7 @@ export interface GameType {
         a: THREE.MeshStandardMaterial;
         b: THREE.MeshStandardMaterial;
         c: THREE.MeshStandardMaterial;
-        // e: THREE.MeshStandardMaterial;
-        // f: THREE.MeshStandardMaterial;
-        // g: THREE.MeshStandardMaterial;
-        // h: THREE.MeshStandardMaterial;
-        // i: THREE.MeshStandardMaterial;
-        // j: THREE.MeshStandardMaterial;
-        // k: THREE.MeshStandardMaterial;
-        // l: THREE.MeshStandardMaterial;
+        l: THREE.MeshStandardMaterial;
       };
       water: {
         a: THREE.MeshStandardMaterial;
@@ -53,6 +53,12 @@ export interface GameType {
         b: THREE.MeshStandardMaterial;
         b2: THREE.MeshStandardMaterial;
         d: THREE.MeshStandardMaterial;
+        e: THREE.MeshStandardMaterial;
+        f: THREE.MeshStandardMaterial;
+        g: THREE.MeshStandardMaterial;
+        h: THREE.MeshStandardMaterial;
+        i: THREE.MeshStandardMaterial;
+        j: THREE.MeshStandardMaterial;
       };
     };
   };
@@ -67,13 +73,12 @@ export interface GameType {
         b: Hex;
         c: Hex;
         d: Hex;
-        // e: Hex;
-        // f: Hex;
-        // g: Hex;
-        // h: Hex;
-        // i: Hex;
-        // j: Hex;
-        // k: Hex;
+        e: Hex;
+        f: Hex;
+        g: Hex;
+        h: Hex;
+        i: Hex;
+        j: Hex;
         // l: Hex;
       };
       bridgeFor: {
@@ -83,14 +88,7 @@ export interface GameType {
         a: Hex;
         b: Hex;
         c: Hex;
-        // e: Hex;
-        // f: Hex;
-        // g: Hex;
-        // h: Hex;
-        // i: Hex;
-        // j: Hex;
-        // k: Hex;
-        // l: Hex;
+        l: Hex;
       };
       water: {
         a: Hex;
@@ -99,6 +97,12 @@ export interface GameType {
         b: Hex;
         b2: Hex;
         d: Hex;
+        e: Hex;
+        f: Hex;
+        g: Hex;
+        h: Hex;
+        i: Hex;
+        j: Hex;
       };
     };
   };

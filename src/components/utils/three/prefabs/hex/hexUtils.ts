@@ -39,12 +39,11 @@ export const getHexLines = (
         i;
     const current: DummyUpdate = HexClass.dummy;
 
-    const { dummy: hex, update } = current;
+    const { dummy: hex } = current;
     hex.position.x = xnew;
     hex.position.y = ynew;
     hex.position.z = znew;
     // hex.position.y = initial.dummy.position.y;
-    update();
     hexes.push(current);
   }
   return [initial, ...hexes];
@@ -108,10 +107,11 @@ export const getHexRamp = (
     .normalize();
   const hexes = getHexLines(HexClass, Game, initial, num + 1, angle).map(
     (
-      { dummy: hex, update, parent }: DummyUpdate,
+      current: DummyUpdate,
       i: number,
       arr: DummyUpdate[]
     ) => {
+      const { dummy: hex } = current;
       if (i == arr.length - 1) {
         hex.position.y += height * (rampUp ? 1 : -1);
       } else if (i != 0) {
@@ -135,8 +135,7 @@ export const getHexRamp = (
         // Aplicar la rotación al objeto
         hex.quaternion.multiplyQuaternions(quaternion, hex.quaternion);
       }
-      update();
-      return { dummy: hex, update, parent };
+      return current;
     }
   );
   return hexes;

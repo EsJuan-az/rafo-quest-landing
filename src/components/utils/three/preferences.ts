@@ -2,15 +2,16 @@ import * as THREE from "three";
 import { GUI } from "dat.gui";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GameType } from "./types";
-import { Hex, HexGrass, HexWater, HexDecoWay } from "./prefabs/hex/hex";
+import { Hex } from "./prefabs/hex/hex";
+import { ProcessNaturalA } from "./sprite/spriteProcess";
 
 const preferences = {
   HEX_WAY_HEIGHT: 0.5,
   HEX_WAY_RAD: 8,
   HEX_CHECKPOINT_RAD: 7.5,
   HEX_GRASS_HEIGHT: 1.5,
-  HEX_WATER_HEIGHT: 0.1
-}
+  HEX_WATER_HEIGHT: 0.1,
+};
 
 export const setBgColor = ({ renderer }: GameType) => {
   const rootStyle = getComputedStyle(document.documentElement);
@@ -35,17 +36,23 @@ export const setLights = (Game: GameType) => {
   Game.lights = { ambientLight, directionalLight };
 };
 
-export const setMaterials = (Game: GameType) => {
+export const setMaterials = async (Game: GameType) => {
   const textureLoader = new THREE.TextureLoader();
+
   const personajeTex = textureLoader.load("/textures/personaje.png");
   const personaje = new THREE.SpriteMaterial({
     map: personajeTex,
     transparent: true,
   });
   Game.materials = {
+    sprites: {
+      natural: {
+        a: await ProcessNaturalA(textureLoader),
+      },
+    },
     personaje,
     hex: {
-      debug: new THREE.MeshStandardMaterial({color: 0x2a9d8f}),
+      debug: new THREE.MeshStandardMaterial({ color: 0x2a9d8f }),
       checkpoint: new THREE.MeshStandardMaterial({
         color: 0x8338ec,
         metalness: 1,
@@ -55,26 +62,50 @@ export const setMaterials = (Game: GameType) => {
       }),
       way: {
         a: new THREE.MeshBasicMaterial({
-          color: 0xf4a261, 
-          roughness: 0.3, 
+          color: 0xf4a261,
+          roughness: 0.3,
         }),
         b: new THREE.MeshBasicMaterial({
-          color: 0xd12e2e, 
+          color: 0xd12e2e,
           roughness: 0.3,
         }),
         c: new THREE.MeshBasicMaterial({
-          color: 0x533286, 
+          color: 0x533286,
           roughness: 0.3,
         }),
         d: new THREE.MeshBasicMaterial({
-          color: 0x616566, 
+          color: 0x616566,
+          roughness: 0.3,
+        }),
+        e: new THREE.MeshBasicMaterial({
+          color: 0x29433f,
+          roughness: 0.3,
+        }),
+        f: new THREE.MeshBasicMaterial({
+          color: 0x9b8136,
+          roughness: 0.3,
+        }),
+        g: new THREE.MeshBasicMaterial({
+          color: 0x2bfafa,
+          roughness: 0.3,
+        }),
+        h: new THREE.MeshBasicMaterial({
+          color: 0xf37042,
+          roughness: 0.3,
+        }),
+        i: new THREE.MeshBasicMaterial({
+          color: 0xebdbaa,
+          roughness: 0.3,
+        }),
+        j: new THREE.MeshBasicMaterial({
+          color: 0x0066cc,
           roughness: 0.3,
         }),
       },
       bridgeFor: {
         a: new THREE.MeshStandardMaterial({
-          color: 0x6f4e37, 
-          roughness: 0.4, 
+          color: 0x6f4e37,
+          roughness: 0.4,
         }),
       },
       grass: {
@@ -88,6 +119,10 @@ export const setMaterials = (Game: GameType) => {
         }),
         c: new THREE.MeshStandardMaterial({
           color: 0x8cb055, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+        l: new THREE.MeshStandardMaterial({
+          color: 0xe3e3e3, // Color base
           roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
         }),
       },
@@ -112,6 +147,30 @@ export const setMaterials = (Game: GameType) => {
           color: 0x4d5152, // Color base
           roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
         }),
+        e: new THREE.MeshBasicMaterial({
+          color: 0xffffff, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+        f: new THREE.MeshBasicMaterial({
+          color: 0x333445, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+        g: new THREE.MeshBasicMaterial({
+          color: 0x3e4339, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+        h: new THREE.MeshBasicMaterial({
+          color: 0x5a5e61, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+        i: new THREE.MeshBasicMaterial({
+          color: 0x5e533e, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+        j: new THREE.MeshBasicMaterial({
+          color: 0x17426b, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
       },
     },
   };
@@ -125,7 +184,7 @@ export const setMeshes = (Game: GameType) => {
         thick: 0.3,
         material: Game.materials.hex.debug,
       }),
-      checkpoint: new Hex(Game, 10, {
+      checkpoint: new Hex(Game, 12, {
         rad: preferences.HEX_CHECKPOINT_RAD,
         thick: preferences.HEX_WAY_HEIGHT,
         material: Game.materials.hex.checkpoint,
@@ -146,10 +205,40 @@ export const setMeshes = (Game: GameType) => {
           thick: preferences.HEX_WAY_HEIGHT,
           material: Game.materials.hex.way.c,
         }),
-        d: new Hex(Game, 18, {
+        d: new Hex(Game, 24, {
           rad: preferences.HEX_WAY_RAD,
           thick: preferences.HEX_WAY_HEIGHT,
           material: Game.materials.hex.way.d,
+        }),
+        e: new Hex(Game, 16, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.way.e,
+        }),
+        f: new Hex(Game, 15, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.way.f,
+        }),
+        g: new Hex(Game, 13, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.way.g,
+        }),
+        h: new Hex(Game, 24, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.way.h,
+        }),
+        i: new Hex(Game, 12, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.way.i,
+        }),
+        j: new Hex(Game, 23, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.way.j,
         }),
       },
       bridgeFor: {
@@ -160,46 +249,81 @@ export const setMeshes = (Game: GameType) => {
         }),
       },
       grass: {
-        a: new HexGrass(Game, 27, {
+        a: new Hex(Game, 36, {
           rad: 8,
           thick: preferences.HEX_GRASS_HEIGHT,
           material: Game.materials.hex.grass.a,
         }),
-        b: new HexGrass(Game, 44, {
+        b: new Hex(Game, 62, {
           rad: 8,
           thick: preferences.HEX_GRASS_HEIGHT,
           material: Game.materials.hex.grass.b,
         }),
-        c: new HexGrass(Game, 20, {
+        c: new Hex(Game, 52, {
           rad: 8,
           thick: preferences.HEX_GRASS_HEIGHT,
           material: Game.materials.hex.grass.c,
         }),
+        l: new Hex(Game, 6, {
+          rad: 8,
+          thick: preferences.HEX_GRASS_HEIGHT,
+          material: Game.materials.hex.grass.l,
+        }),
       },
       water: {
-        a: new HexWater(Game, 28, {
+        a: new Hex(Game, 32, {
           rad: 8,
           thick: preferences.HEX_WATER_HEIGHT,
           material: Game.materials.hex.water.a,
         }),
       },
       decoWay: {
-        b: new HexDecoWay(Game, 12, {
+        b: new Hex(Game, 52, {
           rad: 8,
           thick: preferences.HEX_WAY_HEIGHT,
           material: Game.materials.hex.decoWay.b,
         }),
-        b2: new HexDecoWay(Game, 20, {
+        b2: new Hex(Game, 20, {
           rad: 8,
           thick: preferences.HEX_WAY_HEIGHT,
           material: Game.materials.hex.decoWay.b2,
         }),
-        d: new HexDecoWay(Game, 26, {
+        d: new Hex(Game, 26, {
           rad: 8,
           thick: preferences.HEX_WAY_HEIGHT,
           material: Game.materials.hex.decoWay.d,
         }),
-      }
+        e: new Hex(Game, 45, {
+          rad: 8,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.decoWay.e,
+        }),
+        f: new Hex(Game, 17, {
+          rad: 8,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.decoWay.f,
+        }),
+        g: new Hex(Game, 23, {
+          rad: 8,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.decoWay.g,
+        }),
+        h: new Hex(Game, 21, {
+          rad: 8,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.decoWay.h,
+        }),
+        i: new Hex(Game, 12, {
+          rad: 8,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.decoWay.i,
+        }),
+        j: new Hex(Game, 15, {
+          rad: 8,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.decoWay.j,
+        }),
+      },
     },
   };
 };
