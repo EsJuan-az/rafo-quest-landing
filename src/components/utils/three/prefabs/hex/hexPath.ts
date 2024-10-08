@@ -2,7 +2,7 @@ import { Constructor, DummyUpdate, GameType } from '../../types';
 import * as THREE from "three";
 import { Hex, HexCheckPoint } from "./hex";
 import { Facing, getHexCurve, getHexLines, getHexRamp } from "./hexUtils";
-import { preferences } from '../../preferences';
+import config from '../../../../../../tailwind.config';
 export enum HexPathAction {
   LINE = "line",
   CURVE = "curve",
@@ -25,13 +25,13 @@ export class HexPath {
     const instance = new HexPath(Game, this.chainEdge);
     instance.setHexClass(Game.meshes.hex.checkpoint);
     instance.doHexLine(1, facing)
-    instance.setHexClass(Game.meshes.hex.base);
+    instance.setHexClass(Game.meshes.hex.debug);
     return instance;
   }
 
   constructor(Game: GameType, initialHex: DummyUpdate | undefined = undefined) {
     this.Game = Game;
-    this.HexClass = Game.meshes.hex.base;
+    this.HexClass = Game.meshes.hex.debug;
     if(initialHex){
       this.path.push(initialHex);
     }else{
@@ -75,8 +75,8 @@ export class HexPath {
   doHexCurve(
     num: number,
     facing: Facing,
-    curveSize: number = 1,
     clock: boolean = false,
+    curveSize: number = 1,
     initialIndex: number = -1
   ) {
     const [, ...newHexes] = getHexCurve(
@@ -104,7 +104,7 @@ export class HexPath {
       this.hexAt(initialIndex),
       num,
       facing,
-      preferences.rampHeight,
+      this.HexClass.config.rad,
       rampUp
     );
     this.addHexes(newHexes);

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { GUI } from 'dat.gui'
+import { GUI } from "dat.gui";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { MutableRefObject } from "react";
 import { Hex } from "./prefabs/hex/hex";
@@ -12,26 +12,50 @@ export interface GameType {
   orbitControls: OrbitControls;
   lights: object;
   materials: {
-    personaje: THREE.SpriteMaterial,
+    personaje: THREE.SpriteMaterial;
     hex: {
-      base: THREE.MeshStandardMaterial,
-      checkpoint: THREE.MeshStandardMaterial
-    }
+      debug: THREE.MeshStandardMaterial;
+      checkpoint: THREE.MeshStandardMaterial;
+      way: {
+        a: THREE.MeshStandardMaterial;
+        b: THREE.MeshStandardMaterial;
+      };
+      bridgeFor: {
+        a: THREE.MeshStandardMaterial;
+      };
+      grass: {
+        a: THREE.MeshStandardMaterial;
+      };
+      water: {
+        a: THREE.MeshStandardMaterial;
+      };
+    };
   };
   components: object;
-  geometries: {
-    hex: THREE.ExtrudeGeometry
-  };
   gui: GUI;
   meshes: {
     hex: {
-      base: Hex,
-      checkpoint: Hex
-    }
+      debug: Hex;
+      checkpoint: Hex;
+      way: {
+        a: Hex;
+        b: Hex;
+      };
+      bridgeFor: {
+        a: Hex;
+      };
+      grass: {
+        a: Hex;
+      };
+      water: {
+        a: Hex;
+      };
+    };
   };
 }
 
 export type DummyUpdate = {
-  dummy: THREE.Object3D,
-  update: () => void,
-}
+  dummy: THREE.Object3D;
+  update: () => void;
+  parent: Hex;
+};

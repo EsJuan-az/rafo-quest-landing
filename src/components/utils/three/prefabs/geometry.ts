@@ -1,7 +1,10 @@
 import * as THREE from "three";
-
+const hexGeometries: Map<number[], THREE.ExtrudeGeometry> = new Map();
 export const getHexagonGeometry = (radius: number, thickness: number) => {
   // Definir los vértices del hexágono en el plano xz
+  const cached: THREE.ExtrudeGeometry | undefined = hexGeometries.get([radius, thickness]);
+  if(cached) return cached; 
+
   const shape = new THREE.Shape();
   for (let i = 0; i < 6; i++) {
     const angle = (i / 6) * Math.PI * 2;
@@ -27,5 +30,6 @@ export const getHexagonGeometry = (radius: number, thickness: number) => {
   hexGeometry.rotateY(Math.PI / 6);
   // Crear el material
   // Crear el mesh con la geometría y el material
+  hexGeometries.set([radius, thickness], hexGeometry);
   return hexGeometry;
 };

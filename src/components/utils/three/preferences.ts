@@ -2,15 +2,15 @@ import * as THREE from "three";
 import { GUI } from "dat.gui";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GameType } from "./types";
-import { getHexagonGeometry } from "./prefabs/geometry";
-import { getColorMaterial } from "./utils";
-import { Hex, HexCheckPoint } from "./prefabs/hex/hex";
+import { Hex, HexGrass, HexWater } from "./prefabs/hex/hex";
 
-export const preferences = {
-  hexRad: 5,
-  hexThick: 1,
-  rampHeight: 5,
-};
+const preferences = {
+  HEX_WAY_HEIGHT: 0.5,
+  HEX_WAY_RAD: 8,
+  HEX_CHECKPOINT_RAD: 7.5,
+  HEX_GRASS_HEIGHT: 1.5,
+  HEX_WATER_HEIGHT: 0.1
+}
 
 export const setBgColor = ({ renderer }: GameType) => {
   const rootStyle = getComputedStyle(document.documentElement);
@@ -44,42 +44,99 @@ export const setMaterials = (Game: GameType) => {
   });
   Game.materials = {
     personaje,
-    hex:{
-      base: getColorMaterial(0x2a9d8f),
+    hex: {
+      debug: new THREE.MeshStandardMaterial({color: 0x2a9d8f}),
       checkpoint: new THREE.MeshStandardMaterial({
         color: 0x8338ec,
         metalness: 1,
         roughness: 0.1,
-        emissive: 0xb5179e, 
+        emissive: 0xb5179e,
         emissiveIntensity: 0.6,
       }),
-      waya: new THREE.MeshStandardMaterial({
-        color: 0xfd8a08, // Color base 
-        roughness: 0.3,  // Un poco de rugosidad para que no sea completamente reflectante
-      }),
+      way: {
+        a: new THREE.MeshBasicMaterial({
+          color: 0xf4a261, 
+          roughness: 0.3, 
+        }),
+        b: new THREE.MeshBasicMaterial({
+          color: 0xffffff, 
+          roughness: 0.3, 
+        }),
+      },
+      bridgeFor: {
+        a: new THREE.MeshStandardMaterial({
+          color: 0x6f4e37, 
+          roughness: 0.4, 
+        }),
+      },
+      grass: {
+        a: new THREE.MeshStandardMaterial({
+          color: 0x2a9d8f, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+      },
+      water: {
+        a: new THREE.MeshStandardMaterial({
+          color: 0x219ebc, // Color base
+          roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
+        }),
+      },
     },
-    
   };
 };
 
-export const setMeshes = ( Game: GameType ) => {
+export const setMeshes = (Game: GameType) => {
   Game.meshes = {
     hex: {
-      base: new Hex(Game, 50),
-      checkpoint: new HexCheckPoint(Game, 10),
-    }
-  }
-}
-
+      debug: new Hex(Game, 0, {
+        rad: 8,
+        thick: 0.3,
+        material: Game.materials.hex.debug,
+      }),
+      checkpoint: new Hex(Game, 10, {
+        rad: preferences.HEX_CHECKPOINT_RAD,
+        thick: preferences.HEX_WAY_HEIGHT,
+        material: Game.materials.hex.checkpoint,
+      }),
+      way: {
+        a: new Hex(Game, 28, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.way.a,
+        }),
+        b: new Hex(Game, 35, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT,
+          material: Game.materials.hex.way.b,
+        }),
+      },
+      bridgeFor: {
+        a: new Hex(Game, 5, {
+          rad: preferences.HEX_WAY_RAD,
+          thick: preferences.HEX_WAY_HEIGHT * 1.25,
+          material: Game.materials.hex.bridgeFor.a,
+        }),
+      },
+      grass: {
+        a: new HexGrass(Game, 24, {
+          rad: 8,
+          thick: preferences.HEX_GRASS_HEIGHT,
+          material: Game.materials.hex.grass.a,
+        }),
+      },
+      water: {
+        a: new HexWater(Game, 10, {
+          rad: 8,
+          thick: preferences.HEX_WATER_HEIGHT,
+          material: Game.materials.hex.water.a,
+        })
+      }
+    },
+  };
+};
 
 export const setGUI = (Game: GameType) => {
   Game.gui = new GUI();
-};
-
-export const setGeometries = (Game: GameType) => {
-  Game.geometries = {
-    hex: getHexagonGeometry(preferences.hexRad, preferences.hexThick),
-  };
 };
 
 export const setOrbitControls = (Game: GameType) => {

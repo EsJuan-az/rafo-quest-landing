@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "../../ui/tooltip";
 import { FC } from "react";
+import { useRouter } from "next/navigation";
 
 // HOC withTooltip
 const withLinkTooltip = <P extends object>(
@@ -9,10 +10,12 @@ const withLinkTooltip = <P extends object>(
   path: string,
 ) => {
   const WithTooltip: FC<P> = (props) => {
+    
+    const router = useRouter();
     return (
       <TooltipProvider>
         <Tooltip delayDuration={100}>
-          <TooltipTrigger>
+          <TooltipTrigger onClick={() => router.push(path)}>
             <Link href={path}>
               <WrappedComponent {...props} />
             </Link>

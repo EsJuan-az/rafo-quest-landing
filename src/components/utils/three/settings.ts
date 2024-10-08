@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { GameType } from "./types";
 import {
   setBgColor,
-  setGeometries,
   setGUI,
   setLights,
   setMaterials,
@@ -21,6 +20,7 @@ export const setRenderer = (Game: GameType) => {
   } = Game;
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(mountElement.clientWidth, mountElement.clientHeight);
+  renderer.toneMapping = THREE.NoToneMapping; 
   mountElement.appendChild(renderer.domElement);
   Game.renderer = renderer;
 };
@@ -47,7 +47,6 @@ export const setComponents = (Game: GameType) => {
   // setGUI(Game);
   // --- Cargar Texturas ---
   setMaterials(Game);
-  setGeometries(Game);
   setMeshes(Game);
   // --- Crear la Componentes ---
   renderComponents(Game);

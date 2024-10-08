@@ -58,7 +58,7 @@ const ThreeMap = forwardRef(function ThreeMap(props, ref) {
     };
   }, [Game.mountRef]);
 
-  return <div ref={Game.mountRef} style={{ width: "100%", height: "100vh" }} />;
+  return <div className='ml-[-4px]' ref={Game.mountRef} style={{ width: "100%", height: "100vh" }} />;
 });
 
 export default ThreeMap;
