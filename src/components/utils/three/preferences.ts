@@ -63,7 +63,7 @@ export const setMaterials = (Game: GameType) => {
           roughness: 0.3,
         }),
         c: new THREE.MeshBasicMaterial({
-          color: 0xd12e2e, 
+          color: 0x533286, 
           roughness: 0.3,
         }),
       },
@@ -133,7 +133,7 @@ export const setMeshes = (Game: GameType) => {
           thick: preferences.HEX_WAY_HEIGHT,
           material: Game.materials.hex.way.b,
         }),
-        c: new Hex(Game, 34, {
+        c: new Hex(Game, 23, {
           rad: preferences.HEX_WAY_RAD,
           thick: preferences.HEX_WAY_HEIGHT,
           material: Game.materials.hex.way.c,
@@ -157,14 +157,14 @@ export const setMeshes = (Game: GameType) => {
           thick: preferences.HEX_GRASS_HEIGHT,
           material: Game.materials.hex.grass.b,
         }),
-        c: new HexGrass(Game, 38, {
+        c: new HexGrass(Game, 20, {
           rad: 8,
           thick: preferences.HEX_GRASS_HEIGHT,
           material: Game.materials.hex.grass.c,
         }),
       },
       water: {
-        a: new HexWater(Game, 10, {
+        a: new HexWater(Game, 28, {
           rad: 8,
           thick: preferences.HEX_WATER_HEIGHT,
           material: Game.materials.hex.water.a,
