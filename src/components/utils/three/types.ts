@@ -20,7 +20,7 @@ export interface GameType {
         a: THREE.MeshStandardMaterial;
         b: THREE.MeshStandardMaterial;
         c: THREE.MeshStandardMaterial;
-        // d: THREE.MeshStandardMaterial;
+        d: THREE.MeshStandardMaterial;
         // e: THREE.MeshStandardMaterial;
         // f: THREE.MeshStandardMaterial;
         // g: THREE.MeshStandardMaterial;
@@ -37,7 +37,6 @@ export interface GameType {
         a: THREE.MeshStandardMaterial;
         b: THREE.MeshStandardMaterial;
         c: THREE.MeshStandardMaterial;
-        // d: THREE.MeshStandardMaterial;
         // e: THREE.MeshStandardMaterial;
         // f: THREE.MeshStandardMaterial;
         // g: THREE.MeshStandardMaterial;
@@ -53,6 +52,7 @@ export interface GameType {
       decoWay: {
         b: THREE.MeshStandardMaterial;
         b2: THREE.MeshStandardMaterial;
+        d: THREE.MeshStandardMaterial;
       };
     };
   };
@@ -66,7 +66,7 @@ export interface GameType {
         a: Hex;
         b: Hex;
         c: Hex;
-        // d: Hex;
+        d: Hex;
         // e: Hex;
         // f: Hex;
         // g: Hex;
@@ -83,7 +83,6 @@ export interface GameType {
         a: Hex;
         b: Hex;
         c: Hex;
-        // d: Hex;
         // e: Hex;
         // f: Hex;
         // g: Hex;
@@ -99,6 +98,7 @@ export interface GameType {
       decoWay: {
         b: Hex;
         b2: Hex;
+        d: Hex;
       };
     };
   };

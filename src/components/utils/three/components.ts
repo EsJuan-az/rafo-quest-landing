@@ -153,8 +153,38 @@ export const getIsla = (Game: GameType) => {
   .doHexLine(3, Facing.SE, 23)
   .fixPathEnd()
   
-  const hp4 = hp3.getChainedHexPath(Game, Facing.N);
-  
+  const hp4 = hp3.getChainedHexPath(Game, Facing.N); // El club de la pelea
+  hp4
+  .setHexClass(Game.meshes.hex.way.d)
+  .doHexCurve(2, Facing.NW, true)
+  .doHexCurve(2, Facing.NW, true)
+  .doHexCurve(2, Facing.NW)
+  .doHexCurve(2, Facing.NW)
+  .doHexCurve(2, Facing.NW, true)
+  .doHexLine(2, Facing.NW)
+  .doHexCurve(2, Facing.SW)
+  .doHexCurve(3, Facing.SE, true)
+  .doHexLine(1, Facing.SW)
+  .fixPathEnd()
+  .setHexClass(Game.meshes.hex.grass.b)
+  .doHexLine(1, Facing.SW, 4)
+  .doHexCurve(3, Facing.N, false, 1, 7)
+  .doHexLine(1, Facing.NW, 10)
+  .doHexLine(1, Facing.NW, 15)
+  .setHexClass(Game.meshes.hex.decoWay.d)
+  .doHexCurve(5, Facing.SE, false, 1, 5)
+  .doHexLine(1, Facing.NE, 5)
+  .doHexCurve(3, Facing.S, true, 1, 6)
+  .doHexCurve(4, Facing.NE, false, 1, 11)
+  .doHexLine(1, Facing.N, 11)
+  .doHexLine(1, Facing.N, 13)
+  .doHexLine(1, Facing.S, 13)
+  .doHexCurve(4, Facing.N, false, 1, 18)
+  .doHexLine(1, Facing.NW, 18)
+  .doHexCurve(4, Facing.SE, true, 1, 18)
+  .doHexLine(1, Facing.S, 18)
+  .fixPathEnd()
+
   Game.components = {
     ...Game.components,
     // isla: hp.hexes,
