@@ -37,7 +37,7 @@ const ThreeMap = forwardRef(function ThreeMap(props, ref) {
       percentage: 0, // Controla el porcentaje en el camino
       number: 0, // Controla un número entre 0 y 12
     };
-    console.log(BOOKS[params.number].path.points)
+    console.log(BOOKS[params.number].path?.points)
     G.gui.add(params, "percentage", 0, 1, 0.01).onChange(() => {
       personaje.position
         .copy(
@@ -45,7 +45,7 @@ const ThreeMap = forwardRef(function ThreeMap(props, ref) {
         )
         .add(new THREE.Vector3(0, preferences.CHAR_HEIGHT / 2, 0));
     });
-    G.gui.add(params, "number", 0, 12, 1).onChange(() => {
+    G.gui.add(params, "number", 0, 11, 1).onChange(() => {
       console.log("Number changed to: ", params.number);
       personaje.position
         .copy(

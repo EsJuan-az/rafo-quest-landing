@@ -22,6 +22,7 @@ export default async function RootLayout({
   let user;
   if (session){
     const { user: claims, accessToken } = session;
+    console.log(accessToken);
     user = await UserService.getMe(claims, accessToken);
     console.log(user);
   }
