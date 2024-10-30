@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { GUI } from "dat.gui";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { MutableRefObject } from "react";
-import { Hex } from "./prefabs/hex/hex";
+import { Hex } from "./domain/hex";
 export interface GameType {
   scene: THREE.Scene;
   avance: number;
@@ -14,13 +14,16 @@ export interface GameType {
   materials: {
     personaje: THREE.SpriteMaterial;
     sprites: {
-      natural: {
-        a: THREE.SpriteMaterial[],
-      },
-      structures: {
-        a: THREE.SpriteMaterial[],
-      }
-    },
+      a: {
+        flowers: THREE.SpriteMaterial[];
+        palms: THREE.SpriteMaterial[];
+        structure: THREE.SpriteMaterial[];
+      };
+      b: {
+        natural: THREE.SpriteMaterial[];
+        structure: THREE.SpriteMaterial[];
+      };
+    };
     hex: {
       debug: THREE.MeshStandardMaterial;
       checkpoint: THREE.MeshStandardMaterial;
@@ -113,3 +116,31 @@ export type DummyUpdate = {
   update: () => void;
   parent: Hex;
 };
+
+export enum Facing {
+  N = 0,
+  NE = (1 / 3) * Math.PI,
+  SE = (2 / 3) * Math.PI,
+  S = Math.PI,
+  SW = (4 / 3) * Math.PI,
+  NW = (5 / 3) * Math.PI,
+}
+
+export const CardinalPosition = {
+  N: new THREE.Vector3(Math.cos(Facing.N), 0, Math.sin(Facing.N)),
+  E: new THREE.Vector3(
+    Math.cos(Facing.NE - Facing.N),
+    0,
+    Math.sin(Facing.NE - Facing.N)
+  ),
+  W: new THREE.Vector3(
+    Math.cos(Facing.NW - Facing.N),
+    0,
+    Math.sin(Facing.NW - Facing.N)
+  ),
+  NE: new THREE.Vector3(Math.cos(Facing.NE), 0, Math.sin(Facing.NE)),
+  SE: new THREE.Vector3(Math.cos(Facing.SE), 0, Math.sin(Facing.SE)),
+  S: new THREE.Vector3(Math.cos(Facing.S), 0, Math.sin(Facing.S)),
+  SW: new THREE.Vector3(Math.cos(Facing.SW), 0, Math.sin(Facing.SW)),
+  NW: new THREE.Vector3(Math.cos(Facing.NW), 0, Math.sin(Facing.NW)),
+} as const;

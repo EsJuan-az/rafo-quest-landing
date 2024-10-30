@@ -1,7 +1,6 @@
-"use client"
+"use client";
 import ThreeMap from "@/components/ThreeMap";
 import { useRef } from "react";
-
 
 export default function Home() {
   const threeMapRef = useRef(null);
@@ -16,22 +15,22 @@ export default function Home() {
       <button
         onClick={handleLeerLibro}
         style={{
-          position: 'absolute',
-          top: '20px',
-          left: '20px',
-          padding: '10px 20px',
-          backgroundColor: '#28a745',
-          color: 'white',
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: '16px',
-          borderRadius: '5px',
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          padding: "10px 20px",
+          backgroundColor: "#28a745",
+          color: "white",
+          border: "none",
+          cursor: "pointer",
+          fontSize: "16px",
+          borderRadius: "5px",
           zIndex: 40,
         }}
       >
         Leer Libro
       </button>
-      <ThreeMap ref={threeMapRef}/>
+      <ThreeMap ref={threeMapRef} />
     </>
-  )
+  );
 }

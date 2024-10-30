@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
 import { sumPosition } from "@/utils/general";
 import { GameType } from "./types";
+import { Game } from "./domain/game";
 const tweenGroup = new Group();
 
 export const moverPersonaje = (Game: GameType) => {
@@ -35,8 +36,8 @@ export const moverPersonaje = (Game: GameType) => {
   tweenGroup.add(characterTween);
 };
 
-export const animate = ({ renderer, scene, camera }: GameType) => {
-  requestAnimationFrame(() => animate({ renderer, scene, camera } as GameType));
+export const animate = (G: Game) => {
+  requestAnimationFrame(() => animate(G));
   tweenGroup.update();
-  renderer.render(scene, camera);
+  G.renderer.render(G.scene, G.camera);
 };
