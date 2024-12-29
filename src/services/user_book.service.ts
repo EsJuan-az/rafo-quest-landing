@@ -1,8 +1,6 @@
 // services/UserService.js
 import instance from '@/utils/axios';
 import { errorHandler } from '@/utils/errorHandler';
-import { jsonToQueryParams } from '@/utils/general';
-import axios from 'axios';
 
 class UserBookService {
   // Método para obtener la información del usuario

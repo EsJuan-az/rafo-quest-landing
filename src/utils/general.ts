@@ -1,5 +1,5 @@
 
-export function jsonToQueryParams(json: Record<string, any>): string {
+export function jsonToQueryParams(json: Record<string, string>): string {
   const params = new URLSearchParams();
 
   for (const key in json) {

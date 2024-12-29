@@ -19,7 +19,7 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
-  const pageNumbers: (number | string)[] = [];k
+  const pageNumbers: (number | string)[] = [];
   // Determinamos los límites de la paginación
   const startPage = Math.max(currentPage - 2, 1);
   const endPage = Math.min(currentPage + 2, totalPages);

@@ -1,12 +1,18 @@
 "use client";
 
-import BookCard from '@/components/BookCard';
-import CustomPagination from '@/components/CustomPagination';
-import useRafoBooks from '@/hooks/useRafoBooks';
-import { RafoBook } from '@/types/bookTypes';
+import BookCard from "@/components/BookCard";
+import CustomPagination from "@/components/CustomPagination";
+import useRafoBooks from "@/hooks/useRafoBooks";
+import { RafoBook } from "@/types/bookTypes";
 
 export default function Book() {
-  const { books, loading: booksLoading, refresh, setPage, error: booksError } = useRafoBooks();
+  const {
+    books,
+    loading: booksLoading,
+    refresh,
+    setPage,
+    error: booksError,
+  } = useRafoBooks();
   return (
     <div className="container mx-auto px-4">
       <h1 className="text-5xl my-4">Take a look at our readings!</h1>
@@ -14,7 +20,8 @@ export default function Book() {
       {/* Error Message */}
       {booksError && (
         <p className="text-red-500">
-          Something went wrong: {typeof booksError === 'string' ? booksError : 'Unknown error'}
+          Something went wrong:{" "}
+          {typeof booksError === "string" ? booksError : "Unknown error"}
         </p>
       )}
 

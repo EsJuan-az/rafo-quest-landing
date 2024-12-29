@@ -1,7 +1,6 @@
 // services/UserService.js
 import { errorHandler } from '@/utils/errorHandler';
 import { jsonToQueryParams } from '@/utils/general';
-import axios from 'axios';
 import instance from '@/utils/axios';
 class BookService {
   // Método para obtener la información del usuario

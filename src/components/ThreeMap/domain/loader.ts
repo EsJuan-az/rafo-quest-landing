@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { draw2024 } from "../ generation/2024";
+import { draw2024 } from "../generation/2024";
 import { Game } from "./game";
 import { getMeshes, MATERIALS } from "../materials";
 import preferences from "../preferences.json";

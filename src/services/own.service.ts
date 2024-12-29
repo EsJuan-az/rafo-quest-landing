@@ -1,4 +1,4 @@
-import { errorHandler } from "@/utils/errorHandler";
+
 import axios from "axios";
 
 export default class OwnService{
@@ -10,6 +10,7 @@ export default class OwnService{
       }
       return response?.data?.body?.accessToken;
     } catch (error) {
+      console.error("Error fetching token:", error);
       return null;
     }
   }

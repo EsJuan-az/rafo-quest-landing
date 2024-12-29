@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from "react";
 import UserService from "../services/user.service";
 import { RafoUser } from "@/types/userTypes";
 import { useUser } from "@auth0/nextjs-auth0/client";
@@ -12,8 +12,8 @@ interface RafoUserContextType {
   error: object | null;
   claims: Claims | undefined;
   accessToken: string | null;
-  refresh():void;
-};
+  refresh: Dispatch<SetStateAction<null>>;
+}
 
 export const RafoUserContext = createContext<RafoUserContextType>({
   user: null,
@@ -59,36 +59,41 @@ export const RafoUserProvider: React.FC<RafoUserProviderProps> = ({
     }
   };
 
-  const fetchUser = async () => {
-    try {
-      const userData = await UserService.getMe(claims as Claims, accessToken as string);
-      if (!userData.error && userData.body) {
-        setUser(userData.body);
-      } else {
-        setApiError(userData.body);
-      }
-    } catch (err) {
-      console.error("Error fetching user:", err);
-      setApiError({ error: err });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (!auth0Loading && !accessToken) {
       fetchAccessToken();
     }
-  }, [auth0Loading]);
+  }, [auth0Loading, accessToken]);
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await UserService.getMe(
+          claims as Claims,
+          accessToken as string
+        );
+        if (!userData.error && userData.body) {
+          setUser(userData.body);
+        } else {
+          setApiError(userData.body);
+        }
+      } catch (err) {
+        console.error("Error fetching user:", err);
+        setApiError({ error: err });
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (!auth0Loading && !auth0Error && accessToken && claims) {
       fetchUser();
     }
   }, [auth0Loading, auth0Error, accessToken, claims, stateRefresh]);
 
   return (
-    <RafoUserContext.Provider value={{ user, loading, claims, error, accessToken, refresh }}>
+    <RafoUserContext.Provider
+      value={{ user, loading, claims, error, accessToken, refresh }}
+    >
       {children}
     </RafoUserContext.Provider>
   );

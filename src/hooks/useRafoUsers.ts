@@ -1,7 +1,6 @@
-import BookService from "@/services/book.service";
-import OwnService from "@/services/own.service";
 import UserService from "@/services/user.service";
-import { useEffect, useState, useCallback } from "react";
+import { RafoUser } from "@/types/userTypes";
+import { useEffect, useState } from "react";
 
 export default function useRafoUsers() {
   const [users, setUsers] = useState<RafoUser[]>([]);

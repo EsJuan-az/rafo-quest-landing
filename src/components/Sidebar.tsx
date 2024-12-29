@@ -7,7 +7,6 @@ import {
 } from "react-icons/fa6";
 import withLinkTooltip from "./utils/hoc/withLinkTooltip";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Claims } from "@auth0/nextjs-auth0";
 import { RafoUser } from "@/types/userTypes";
 
 const HomeLink = withLinkTooltip(

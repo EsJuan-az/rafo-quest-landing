@@ -1,4 +1,3 @@
-import * as THREE from "three";
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
 import { Game } from "./domain/game";
 import { getPointOnPath } from "./domain/utils";
@@ -30,7 +29,7 @@ export const $moveChar = (G: Game, bk: number, pct: number) => {
   const targetPosition = getPointOnPath(island[bk].points, pct).add(me.initialPosition);
 
   // Configurar el tween para mover el objeto
-  const characterTween = new Tween(me.position, tweenGroup)
+  new Tween(me.position, tweenGroup)
     .to({
       x: targetPosition.x,
       y: targetPosition.y,

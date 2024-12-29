@@ -1,4 +1,4 @@
-import { DummyUpdate, GameType } from "../types";
+import { DummyUpdate } from "../types";
 import * as THREE from "three";
 import { getHexagonGeometry } from "./utils";
 import { Game } from "./game";
@@ -38,7 +38,7 @@ export class Hex extends THREE.InstancedMesh {
       this.setMatrixAt(i, matrix);
     }
   }
-  onUpdate(dummy) {
+  onUpdate() {
     // Here we add sprites to the position as we want.
   }
 

@@ -1,7 +1,6 @@
 import { Game } from "../domain/game";
-import { Facing, GameType } from "../types";
+import { Facing } from "../types";
 import { HexPath } from "../domain/path";
-import { Book } from "../domain/book";
 
 const drawAmorEnLosTiempos = (hp: HexPath) => {
   const { meshes } = hp.Game;
@@ -469,7 +468,7 @@ const drawFunc = [
 export const draw2024 = (G: Game) => {
   let hexPath = new HexPath(G);
   const paths = [];
-  drawFunc.map((fn, i: number) => {
+  drawFunc.map((fn) => {
     const { nextDir } = fn(hexPath);
     paths.push(hexPath)
     hexPath = hexPath.getChainedHexPath(nextDir);

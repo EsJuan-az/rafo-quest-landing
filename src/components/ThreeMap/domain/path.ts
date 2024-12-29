@@ -1,4 +1,4 @@
-import { DummyUpdate, Facing, GameType } from "../types";
+import { DummyUpdate, Facing } from "../types";
 import { Hex } from "./hex";
 import { getHexCurve, getHexLines, getHexRamp } from "./utils";
 import { Game } from "./game";

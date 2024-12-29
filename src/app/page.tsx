@@ -26,10 +26,6 @@ import useRafoUser from "@/hooks/useRafoUser";
 import useRafoUsers from "@/hooks/useRafoUsers";
 import Image from "next/image"; // Usar Image de Next.js
 
-type PropTypes = {
-  auth: Auth;
-};
-
 type RafoBook = {
   cover: string;
   name: string;
@@ -39,12 +35,12 @@ type RafoBook = {
   };
 };
 
-export default function Home({ auth }: PropTypes) {
+export default function Home() {
   const threeRef = useRef(null);
   const [selectedOption, setSelectedOption] = useState<string>("pagesRead");
   const [inputValue, setInputValue] = useState<string>("");
   const [openDialog, setOpenDialog] = useState(false);
-  const { accessToken, user, refresh } = useRafoUser();
+  const { accessToken, user } = useRafoUser();
   const [currentBook, setCurrentBook] = useState<RafoBook | null>(null);
   const myId = user?.id;
   const { users, loading, error } = useRafoUsers();

@@ -12,7 +12,7 @@ const processSprite = function (
   atlas: AtlasData
 ): Promise<THREE.SpriteMaterial[]> {
   const { frames, meta } = atlas;
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     tl.load(`/textures/sprites/${meta.image}`, (texture) => {
       const spriteMaterials: THREE.SpriteMaterial[] = Object.values(frames).map(
         (frameData: object) => {
@@ -43,3 +43,5 @@ const processSprite = function (
     });
   });
 };
+
+export default processSprite;

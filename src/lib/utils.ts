@@ -30,7 +30,8 @@ export async function getAuth(){
       }else{
         auth.error = true;
       }
-    } catch (err) {
+    } catch (error) {
+      console.error("Error fetching user:", error);
       auth.error = true;
     }
   }
