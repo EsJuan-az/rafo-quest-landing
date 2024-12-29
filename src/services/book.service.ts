@@ -2,60 +2,47 @@
 import { errorHandler } from '@/utils/errorHandler';
 import { jsonToQueryParams } from '@/utils/general';
 import axios from 'axios';
-import { ThirdPartyService } from './thirdParty.service';
-
+import instance from '@/utils/axios';
 class BookService {
-  static apiUrl: string  = process.env.NEXT_PUBLIC_RAFOQ_API_URI || '';
   // Método para obtener la información del usuario
-  static async findAll(offset = 0, limit = 10) {
-    const query = {
+  static async findAll(accessToken: string, offset = 0, limit = 10) {
+    const query = jsonToQueryParams({
       offset, limit
+    })
+    const config = {
+      headers: {
+        "Content-Type": 'application/json',
+        Authorization: `Bearer ${accessToken}`, // Incluye el token en el encabezado
+      },
     }
     try {
-      const response = await axios.get(`${this.apiUrl}/book?${jsonToQueryParams(query)}`, {
-        headers: {
-          "Content-Type": 'application/json'
-        },
-      });
-      return response.data.body; // Devuelve los datos del usuario
+      const response = await instance.get(`/book?${query}`, config);
+      return response.data; // Devuelve los datos del usuario
     } catch (error) {
       return errorHandler(error);
     }
   }
-  static async create(data){
-    const placeholder = 'https://covers.openlibrary.org/b/id/10909258-L.jpg';
-    let cover = data.cover;
-    if( !cover ){
-      const volumes = await ThirdPartyService.getVolumes(data.name);
-      if( volumes.totalItems > 0 ){
-        cover = volumes?.items[0]?.volumeInfo?.imageLinks?.thumbnail || placeholder;
-      }else {
-        cover = placeholder;
-      }
-    }
+  static async create(data: object){
+    const config = {
+      headers: {
+        "Content-Type": 'application/json'
+      },
+    };
     try {
-      const response = await axios.post(`${this.apiUrl}/book`, {
-        cover,
-        landscape: placeholder,
-        ...data
-      }, {
-        headers: {
-          "Content-Type": 'application/json'
-        },
-      });
-      return response.data.body; // Devuelve los datos del usuario
+      const response = await instance.post(`/book`, data, config);
+      return response.data;
     } catch (error) {
       return errorHandler(error);
     }
   }
-  static async delete(id){
+  static async delete(id: string){
     try {
-      const response = await axios.delete(`${this.apiUrl}/book/${id}`, {
+      const response = await instance.delete(`/book/${id}`, {
         headers: {
           "Content-Type": 'application/json'
         },
       });
-      return response.data.body; // Devuelve los datos del usuario
+      return response.data; 
     } catch (error) {
       return errorHandler(error);
     }

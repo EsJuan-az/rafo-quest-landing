@@ -17,6 +17,13 @@ export class Game {
    * @type {object}
    */
   public meshes: object = {};
+    /**
+   * Map with meshes.
+   *
+   * @public
+   * @type {object}
+   */
+    public components: object = {};
   /**
    * A list of the components that will be added to the scene.
    *
@@ -140,6 +147,9 @@ export class Game {
   public setGUI() {
     this.gui = new GUI();
   } /** Description placeholder */
+  public setComponents(components) {
+    this.components = components;
+  } /** Description placeholder */
   /**
    * Creates and establish the settings of the orbit controls.
    *
@@ -153,7 +163,7 @@ export class Game {
     controls.maxDistance = 25; // Distancia máxima de la cámara
     controls.minPolarAngle = (75 * Math.PI) / 180; // Límite inferior del ángulo vertical (45 grados)
     controls.maxPolarAngle = (75 * Math.PI) / 180; // Límite superior del ángulo vertical (90 grados)
-    // controls.enablePan = false;
+    controls.enablePan = false;
     controls.update();
     this.orbitControls = controls;
   }
@@ -198,7 +208,7 @@ export class Game {
       0.1,
       1000
     );
-    camera.position.set(0, 10, 15);
+    camera.position.set(0, 15, 10)
     this.addComponent(camera);
     this.camera = camera;
   }

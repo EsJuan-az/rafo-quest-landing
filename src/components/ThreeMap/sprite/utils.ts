@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { DummyUpdate } from "../types";
 import { getRandomHexPoint } from "../utils";
 import { genIntArr } from "@/utils/general";
-interface RandomDrawOneConfig {
+kinterface RandomDrawOneConfig {
   material: THREE.SpriteMaterial;
   scale: THREE.Vector3 | undefined;
   howMany: number;

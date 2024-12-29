@@ -8,6 +8,7 @@ import {
 import withLinkTooltip from "./utils/hoc/withLinkTooltip";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Claims } from "@auth0/nextjs-auth0";
+import { RafoUser } from "@/types/userTypes";
 
 const HomeLink = withLinkTooltip(
   FaHouse,
@@ -31,7 +32,7 @@ const LogoutLink = withLinkTooltip(
 );
 
 interface SidebarProps {
-  user?: Claims
+  user?: RafoUser
 }
 
 export default function Sidebar({ user }: SidebarProps) {
@@ -53,9 +54,9 @@ export default function Sidebar({ user }: SidebarProps) {
       <HomeLink className="fill-secondary size-8" />
 
       <section className="flex flex-col h-1/3 justify-around items-center">
-        <BookLink className="fill-secondary size-8" />
         {user ? (
           <>
+            k<BookLink className="fill-secondary size-8" />
             <LogoutLink className="fill-secondary size-8" />
             <ProfileLink />
           </>

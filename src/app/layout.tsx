@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { montserrat } from "@/utils/fonts";
 import Sidebar from "@/components/Sidebar";
-import UserService from "@/services/user.service";
 import { RafoUserProvider } from "@/context/RafoAuthContext";
 import "./globals.css";
-import { getSession, Session } from "@auth0/nextjs-auth0";
+
 import { Toaster } from "@/components/ui/toaster";
+import React from "react";
+import { Auth, getAuth } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,22 +19,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session: Session = await getSession();
-  let user;
-  if (session){
-    const { user: claims, accessToken } = session;
-    console.log(accessToken);
-    user = await UserService.getMe(claims, accessToken);
-    console.log(user);
-  }
+  const auth: Auth = await getAuth();
   return (
     <html lang="en">
       <UserProvider>
         <RafoUserProvider>
           <body className={`${montserrat.className} antialiased bg-background`}>
             <div className="">
-              <Sidebar user={user}/>
-              <main className="ml-16 relative">{children}</main>
+              {auth.error || <Sidebar user={auth.user} />}
+              <main className="ml-16 relative">
+              {
+                children
+              }
+              </main>
               <Toaster />
             </div>
           </body>
