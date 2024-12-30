@@ -16,120 +16,94 @@ export const MATERIALS = {
     checkpoint: new THREE.MeshStandardMaterial({
       color: 0x8338ec,
       metalness: 1,
-      roughness: 0.1,
       emissive: 0xb5179e,
       emissiveIntensity: 0.6,
     }),
     way: {
       a: new THREE.MeshBasicMaterial({
         color: 0xf4a261,
-        roughness: 0.3,
       }),
       b: new THREE.MeshBasicMaterial({
         color: 0xd12e2e,
-        roughness: 0.3,
       }),
       c: new THREE.MeshBasicMaterial({
         color: 0x533286,
-        roughness: 0.3,
       }),
       d: new THREE.MeshBasicMaterial({
         color: 0x616566,
-        roughness: 0.3,
       }),
       e: new THREE.MeshBasicMaterial({
         color: 0x29433f,
-        roughness: 0.3,
       }),
       f: new THREE.MeshBasicMaterial({
         color: 0x9b8136,
-        roughness: 0.3,
       }),
       g: new THREE.MeshBasicMaterial({
         color: 0x2bfafa,
-        roughness: 0.3,
       }),
       h: new THREE.MeshBasicMaterial({
         color: 0xf37042,
-        roughness: 0.3,
       }),
       i: new THREE.MeshBasicMaterial({
         color: 0xebdbaa,
-        roughness: 0.3,
       }),
       j: new THREE.MeshBasicMaterial({
         color: 0x0066cc,
-        roughness: 0.3,
       }),
     },
     bridgeFor: {
       a: new THREE.MeshStandardMaterial({
         color: 0x6f4e37,
-        roughness: 0.4,
       }),
     },
     grass: {
       a: new THREE.MeshStandardMaterial({
         color: 0x2a9d8f, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       b: new THREE.MeshStandardMaterial({
         color: 0xd2e9af, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       c: new THREE.MeshStandardMaterial({
         color: 0x8cb055, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       l: new THREE.MeshStandardMaterial({
         color: 0xe3e3e3, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
     },
     water: {
       a: new THREE.MeshStandardMaterial({
         color: 0x219ebc, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
     },
     decoWay: {
       b: new THREE.MeshBasicMaterial({
         color: 0x861d1d, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       b2: new THREE.MeshBasicMaterial({
         color: 0xabaeb0, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
         transparent: true, // El objeto es transparente
         opacity: 0.7, // Controla el grado de opacidad del objeto
       }),
       d: new THREE.MeshBasicMaterial({
         color: 0x4d5152, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       e: new THREE.MeshBasicMaterial({
         color: 0xffffff, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       f: new THREE.MeshBasicMaterial({
         color: 0x333445, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       g: new THREE.MeshBasicMaterial({
         color: 0x3e4339, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       h: new THREE.MeshBasicMaterial({
         color: 0x5a5e61, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       i: new THREE.MeshBasicMaterial({
         color: 0x5e533e, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
       j: new THREE.MeshBasicMaterial({
         color: 0x17426b, // Color base
-        roughness: 1, // Un poco de rugosidad para que no sea completamente reflectante
       }),
     },
   },

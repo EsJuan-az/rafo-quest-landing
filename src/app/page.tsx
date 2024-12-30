@@ -19,13 +19,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import ThreeMap from "@/components/ThreeMap";
+import dynamic from "next/dynamic";
 import { toast } from "@/hooks/use-toast";
 import RecordService from "@/services/record.service";
 import useRafoUser from "@/hooks/useRafoUser";
 import useRafoUsers from "@/hooks/useRafoUsers";
 import Image from "next/image"; // Usar Image de Next.js
 
+const ThreeMap = dynamic(() => import("@/components/ThreeMap"), {ssr: false});
 type RafoBook = {
   cover: string;
   name: string;
@@ -92,7 +93,7 @@ export default function Home() {
       const { UserBookData, User } = resp.body;
 
       if (threeRef.current) {
-        threeRef.current.moveChar(UserBookData.book.sortIndex, UserBookData.advanceRatio);
+        (threeRef.current as {moveChar(a: object, b: object): void }).moveChar(UserBookData.book.sortIndex, UserBookData.advanceRatio);
       }
       console.log(User)
       setCurrentBook(User.currentBook)

@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 
 export function jsonToQueryParams(json: Record<string, string>): string {
   const params = new URLSearchParams();
@@ -20,10 +21,10 @@ export function jsonToQueryParams(json: Record<string, string>): string {
   }
   return params.toString();
 }
-export function capitalize(text){
+export function capitalize(text: string){
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
-export function sumPosition(p1, p2){
+export function sumPosition(p1: THREE.Vector3, p2: THREE.Vector3){
     return {
         x: p1.x + p2.x,
         y: p1.y + p2.y,

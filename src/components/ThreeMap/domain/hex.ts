@@ -7,7 +7,7 @@ import { MATERIALS } from "../materials";
 interface HexConfig {
   rad: number;
   thick: number;
-  material?: THREE.MeshStandardMaterial;
+  material?: THREE.MeshStandardMaterial | THREE.MeshBasicMaterial;
 }
 
 export class Hex extends THREE.InstancedMesh {
@@ -25,7 +25,7 @@ export class Hex extends THREE.InstancedMesh {
     this.instances = instances;
     this.initialPosition();
     this.Game = G;
-    this.Game.scene.add(this);
+    if(this.Game.scene) this.Game.scene.add(this);
   }
   initialPosition() {
     const position = new THREE.Vector3(0, this.config.thick, 0);
@@ -56,7 +56,7 @@ export class Hex extends THREE.InstancedMesh {
       $dummy.updateMatrix();
       this.setMatrixAt(actualIndex, $dummy.matrix);
       this.instanceMatrix.needsUpdate = true; // Asegura que la matriz se actualice en la GPU
-      this.onUpdate($dummy);
+      this.onUpdate();
     };
 
     this.index += 1;

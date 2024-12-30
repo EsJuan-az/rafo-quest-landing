@@ -2,7 +2,7 @@
 
 import { error, success } from '@/utils/response';
 import { getAccessToken } from '@auth0/nextjs-auth0';
-
+export const dynamic = 'force-dynamic';
 export async function GET() {
     try {
         const token = await getAccessToken();

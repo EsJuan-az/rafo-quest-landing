@@ -16,6 +16,7 @@ export class Loader {
     G.setComponents({
       characters: this.loadCharacters(G, users, island, myId),
       island,
+      others: G.components.others,
     });
   }
 
@@ -26,7 +27,7 @@ export class Loader {
   static loadCharacters(G: Game, users: RafoUser[], island: HexPath[], myId: string) {
     let me: THREE.Sprite | null = null;
     const initialPositions = Object.values(CardinalPosition);
-    
+    if(!G.camera || !G.orbitControls || !G.scene) return;
     const chars = users.map((u: RafoUser, i: number) => {
       const char = new THREE.Sprite(MATERIALS.personaje);
 
@@ -69,9 +70,10 @@ export class Loader {
       return char;
     });
 
+
     // Filtrar personajes nulos
     const validChars = chars.filter((char) => char !== null) as THREE.Sprite[];
 
-    return { chars: validChars, me };
+    return { others: validChars, me };
   }
 }

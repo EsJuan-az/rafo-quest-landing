@@ -31,7 +31,7 @@ const LogoutLink = withLinkTooltip(
 );
 
 interface SidebarProps {
-  user?: RafoUser
+  user: RafoUser | null;
 }
 
 export default function Sidebar({ user }: SidebarProps) {

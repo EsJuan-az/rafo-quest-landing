@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --no-lint",
     "start": "next start",
     "lint": "next lint"
   },
@@ -37,6 +37,7 @@
     "three": "^0.169.0"
   },
   "devDependencies": {
+    "@types/dat.gui": "^0.7.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

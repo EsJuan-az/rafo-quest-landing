@@ -17,68 +17,75 @@ export class Game {
    * @type {object}
    */
   public meshes: object = {};
-    /**
+  /**
    * Map with meshes.
    *
    * @public
    * @type {object}
    */
-    public components: object = {};
-  /**
-   * A list of the components that will be added to the scene.
-   *
-   * @public
-   * @type {THREE.Object3D[]}
-   */
-  public components: THREE.Object3D[] = [];
+  public components: {
+    characters: {
+      me?: THREE.Object3D & { initialPosition: THREE.Vector3 };
+      others: THREE.Object3D[];
+    };
+    island: (THREE.Object3D & { points: THREE.Vector3[] })[];
+    others: THREE.Object3D[];
+  } = {
+    characters: {
+      me: undefined,
+      others: []
+    },
+    island: [],
+    others: []
+  };
   /**
    * The three renderer used for the game.
    *
    * @public
    * @type {THREE.WebGLRenderer}
    */
-  public renderer: THREE.WebGLRenderer;
+  public renderer: THREE.WebGLRenderer | undefined;
   /**
    * The scene when all will be displayed.
    *
    * @public
    * @type {THREE.Scene}
    */
-  public scene: THREE.Scene;
+  public scene: THREE.Scene | undefined;
   /**
    * The HTML Element where the game will be placed.
    *
    * @public
    * @type {HTMLElement}
    */
-  public mountElement: HTMLElement;
+  public mountElement: HTMLElement | undefined;
   /**
    * Interactive debug GUI.
    *
    * @public
    * @type {GUI}
    */
-  public gui: GUI;
+  public gui: GUI | undefined;
   /**
    * Controls configuration for the camera to move around the scene.
    *
    * @public
    * @type {OrbitControls}
    */
-  public orbitControls: OrbitControls;
+  public orbitControls?: OrbitControls;
   /**
    * The user perspective of the scene.
    *
    * @public
    * @type {THREE.PerspectiveCamera}
    */
-  public camera: THREE.PerspectiveCamera;
+  public camera?: THREE.PerspectiveCamera;
   /**
    * Lights into the scene.
    * @public
    * @type {{ ambient: THREE.AmbientLight, directional: THREE.DirectionalLight }}
    */
-  public lights: THREE.Light[];
+  public lights?: THREE.Light[];
   /**
    * Creates an instance of Game.
    *
@@ -97,8 +104,9 @@ export class Game {
    * @param {THREE.Object3D} component
    */
   addComponent(component: THREE.Object3D) {
+    if(!this.scene || !component) return;
     this.scene.add(component);
-    this.components.push(component);
+    this.components.others.push(component as THREE.Object3D);
   }
   /**
    * Set the html element.
@@ -122,6 +130,7 @@ export class Game {
    * @public
    */
   public setRenderer() {
+    if(!this.mountElement) return;
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(
       this.mountElement.clientWidth,
@@ -147,7 +156,7 @@ export class Game {
   public setGUI() {
     this.gui = new GUI();
   } /** Description placeholder */
-  public setComponents(components) {
+  public setComponents(components: typeof Game.prototype.components) {
     this.components = components;
   } /** Description placeholder */
   /**
@@ -157,6 +166,7 @@ export class Game {
    */
   public setOrbitControls() {
     const { camera, renderer } = this;
+    if(!camera || !renderer) return;
     const controls = new OrbitControls(camera, renderer.domElement);
     // Configura los límites de movimiento
     controls.minDistance = 25; // Distancia mínima de la cámara
@@ -173,6 +183,7 @@ export class Game {
    * @public
    */
   public setBackgroundColor() {
+    if(!this.renderer) return;
     const rootStyle = getComputedStyle(document.documentElement);
     const backgroundHSL = rootStyle.getPropertyValue("--background").trim(); // Obtiene el valor HSL
     // Separar los valores de HSL (formato: "240 5.9% 10%")
@@ -202,13 +213,14 @@ export class Game {
    * @public
    */
   public setPerspectiveCamera() {
+    if(!this.mountElement) return;
     const camera = new THREE.PerspectiveCamera(
       75,
       this.mountElement.clientWidth / this.mountElement.clientHeight,
       0.1,
       1000
     );
-    camera.position.set(0, 15, 10)
+    camera.position.set(0, 15, 10);
     this.addComponent(camera);
     this.camera = camera;
   }
@@ -219,6 +231,7 @@ export class Game {
    * @public
    */
   public handleResize() {
+    if(!this.renderer || !this.camera || !this.mountElement) return;
     if (this.mountElement) {
       const width = this.mountElement.clientWidth;
       const height = this.mountElement.clientHeight;
@@ -227,7 +240,7 @@ export class Game {
       this.camera.updateProjectionMatrix();
     }
   }
-  
+
   /**
    * This method includes all the primal configuration of the game object.
    *

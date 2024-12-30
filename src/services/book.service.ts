@@ -6,7 +6,7 @@ class BookService {
   // Método para obtener la información del usuario
   static async findAll(accessToken: string, offset = 0, limit = 10) {
     const query = jsonToQueryParams({
-      offset, limit
+      offset: `${offset}`, limit: `${limit}`
     })
     const config = {
       headers: {
