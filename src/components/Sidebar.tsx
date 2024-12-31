@@ -51,11 +51,10 @@ export default function Sidebar({ user }: SidebarProps) {
       flex flex-col items-center justify-around fixed top-0 left-0 z-30"
     >
       <HomeLink className="fill-secondary size-8" />
-
       <section className="flex flex-col h-1/3 justify-around items-center">
         {user ? (
           <>
-            k<BookLink className="fill-secondary size-8" />
+            <BookLink className="fill-secondary size-8" />
             <LogoutLink className="fill-secondary size-8" />
             <ProfileLink />
           </>

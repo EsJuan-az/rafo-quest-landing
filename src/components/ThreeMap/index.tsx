@@ -20,7 +20,7 @@ type PropTypes = {
 const ThreeMap = forwardRef(function ThreeMap({users, myId}: PropTypes, ref) {
   const mountRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
   const GameData: MutableRefObject<Game | null> = useRef(null);
-  const moveChar = useCallback((bk: number, pct: number) => GameData.current && $moveChar(GameData.current, bk, pct), [GameData]);
+  const moveChar = useCallback((bk: number, pct: number) => $moveChar(GameData.current, bk, pct), [GameData]);
   // Exponer la función moverPersonaje al componente padre
   useImperativeHandle(ref, () => ({
     moveChar,

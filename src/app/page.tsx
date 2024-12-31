@@ -19,14 +19,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import dynamic from "next/dynamic";
 import { toast } from "@/hooks/use-toast";
 import RecordService from "@/services/record.service";
 import useRafoUser from "@/hooks/useRafoUser";
 import useRafoUsers from "@/hooks/useRafoUsers";
 import Image from "next/image"; // Usar Image de Next.js
+import ThreeMap from "@/components/ThreeMap";
 
-const ThreeMap = dynamic(() => import("@/components/ThreeMap"), {ssr: false});
 type RafoBook = {
   cover: string;
   name: string;
@@ -91,12 +90,13 @@ export default function Home() {
       }
 
       const { UserBookData, User } = resp.body;
-
       if (threeRef.current) {
-        (threeRef.current as {moveChar(a: object, b: object): void }).moveChar(UserBookData.book.sortIndex, UserBookData.advanceRatio);
+        (threeRef.current as { moveChar(a: object, b: object): void }).moveChar(
+          UserBookData.book.sortIndex,
+          UserBookData.advanceRatio
+        );
       }
-      console.log(User)
-      setCurrentBook(User.currentBook)
+      setCurrentBook(User.currentBook);
       setOpenDialog(false);
     } catch (error) {
       console.log(error);
@@ -134,7 +134,9 @@ export default function Home() {
               <h3 className="text-lg font-semibold">{currentBook.name}</h3>
               <div className="mt-2">
                 <p className="text-sm font-medium">
-                  Progress: {progressPercentage}% ({currentBook.UserBookData.currentPage}/{currentBook.UserBookData.totalPages})
+                  Progress: {progressPercentage}% (
+                  {currentBook.UserBookData.currentPage}/
+                  {currentBook.UserBookData.totalPages})
                 </p>
                 <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
                   <div
@@ -155,66 +157,73 @@ export default function Home() {
       ) : !currentBook ? (
         <p>You must add the total pages of the next book to proceed.</p>
       ) : users && myId ? (
-        <ThreeMap ref={threeRef} users={users} myId={myId} />
+        <>
+          <ThreeMap ref={threeRef} users={users} myId={myId} />
+          <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+            <DialogTrigger asChild>
+              <Button className="fixed bottom-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-full shadow-md">
+                Advance
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="w-80 p-6">
+              <DialogTitle>Advance in the book</DialogTitle>
+              <DialogDescription>
+                Choose how you want to advance and specify the value.
+              </DialogDescription>
+
+              <div className="mb-4">
+                <Select
+                  value={selectedOption}
+                  onValueChange={handleSelectChange}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Advance Options</SelectLabel>
+                      <SelectItem value="pagesRead">
+                        By Number of Pages
+                      </SelectItem>
+                      <SelectItem value="currentPage">
+                        By Current Page
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="mb-4">
+                <Input
+                  id="inputValue"
+                  type="number"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  placeholder="Number of pages"
+                />
+              </div>
+
+              <div className="flex justify-between mt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setOpenDialog(false)}
+                  className="bg-gray-300 py-2 px-4 rounded"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleSubmit}
+                  className="bg-blue-500 text-white py-2 px-4 rounded"
+                >
+                  Advance
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </>
       ) : (
         <p>No users available.</p>
       )}
-
-      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogTrigger asChild>
-          <Button className="fixed bottom-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-full shadow-md">
-            Advance
-          </Button>
-        </DialogTrigger>
-
-        <DialogContent className="w-80 p-6">
-          <DialogTitle>Advance in the book</DialogTitle>
-          <DialogDescription>
-            Choose how you want to advance and specify the value.
-          </DialogDescription>
-
-          <div className="mb-4">
-            <Select value={selectedOption} onValueChange={handleSelectChange}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select an option" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Advance Options</SelectLabel>
-                  <SelectItem value="pagesRead">By Number of Pages</SelectItem>
-                  <SelectItem value="currentPage">By Current Page</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="mb-4">
-            <Input
-              id="inputValue"
-              type="number"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Number of pages"
-            />
-          </div>
-
-          <div className="flex justify-between mt-4">
-            <Button
-              variant="outline"
-              onClick={() => setOpenDialog(false)}
-              className="bg-gray-300 py-2 px-4 rounded"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleSubmit}
-              className="bg-blue-500 text-white py-2 px-4 rounded"
-            >
-              Advance
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

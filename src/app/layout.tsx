@@ -26,7 +26,7 @@ export default async function RootLayout({
         <RafoUserProvider>
           <body className={`${montserrat.className} antialiased bg-background`}>
             <div className="">
-              {auth.error || <Sidebar user={auth.user} />}
+              <Sidebar user={auth.user || null} />
               <main className="ml-16 relative">
               {
                 children

@@ -34,7 +34,7 @@ export const $moveChar = (G: Game, bk: number, pct: number) => {
   );
 
   // Configurar el tween para mover el objeto
-  new Tween(me.position, tweenGroup)
+  const movTween = new Tween(me.position, tweenGroup)
     .to(
       {
         x: targetPosition.x,
@@ -45,6 +45,7 @@ export const $moveChar = (G: Game, bk: number, pct: number) => {
     ) // Duración de 3000ms
     .easing(Easing.Quadratic.InOut) // Efecto de suavizado
     .onUpdate(() => {
+      if( !G.orbitControls || !G.camera) return;
       G.orbitControls.target.copy(me.position); // Actualizar el objetivo de la cámara
       G.camera.lookAt(me.position); // Hacer que la cámara mire al personaje
     })

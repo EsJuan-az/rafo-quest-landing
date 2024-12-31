@@ -154,7 +154,9 @@ export class Game {
    * @public
    */
   public setGUI() {
-    this.gui = new GUI();
+    if( process.env.NODE_ENV != 'production' ){
+      this.gui = new GUI();
+    }
   } /** Description placeholder */
   public setComponents(components: typeof Game.prototype.components) {
     this.components = components;
