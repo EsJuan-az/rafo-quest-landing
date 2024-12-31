@@ -13,37 +13,51 @@ import { Game } from "./domain/game";
 import { Loader } from "./domain/loader";
 import { RafoUser } from '../../types/userTypes';
 import { $moveChar } from "./movement";
+
 type PropTypes = {
   users: RafoUser[],
   myId: string,
+  gameRef : MutableRefObject<Game | null>
 }
-const ThreeMap = forwardRef(function ThreeMap({users, myId}: PropTypes, ref) {
+
+function ThreeMap({ users, myId, gameRef }: PropTypes) {
   const mountRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
-  const GameData: MutableRefObject<Game | null> = useRef(null);
-  const moveChar = useCallback((bk: number, pct: number) => $moveChar(GameData.current, bk, pct), [GameData]);
+
+  const moveChar = useCallback(
+    (bk: number, pct: number) => {
+      if (gameRef.current) {
+        $moveChar(gameRef.current, bk, pct);
+      }
+    },
+    []
+  );
+
   // Exponer la función moverPersonaje al componente padre
-  useImperativeHandle(ref, () => ({
-    moveChar,
-    Game: GameData.current,
-  }));
+  // useImperativeHandle(ref, () => ({
+  //   moveChar,
+  //   Game: GameData.current,
+  // }));
 
   useEffect(() => {
+
     const mountElement: HTMLElement | null | undefined = mountRef.current;
     if (!mountElement) return;
+
     const G = new Game(mountElement);
     Loader.set(G, users, myId);
-    GameData.current = G;
-    
-    
-    if (typeof window == 'undefined') return;
-    window.addEventListener("resize", () => G.handleResize());
-    // --- Limpiar al Desmontar el Componente ---
+    gameRef.current = G;
+
+    const handleResize = () => G.handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // Limpiar al desmontar
     return () => {
-      window.removeEventListener("resize", () => G.handleResize());
-      if(!G.renderer) return;
-      mountElement.removeChild(G.renderer.domElement);
+      window.removeEventListener("resize", handleResize);
+      if (G.renderer) {
+        mountElement.removeChild(G.renderer.domElement);
+      }
     };
-  }, [mountRef, users, myId]);
+  }, [users, myId, gameRef]);
 
   return (
     <div
@@ -52,6 +66,7 @@ const ThreeMap = forwardRef(function ThreeMap({users, myId}: PropTypes, ref) {
       style={{ width: "100%", height: "100vh" }}
     />
   );
-});
+};
+
 
 export default ThreeMap;

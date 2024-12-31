@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import { forwardRef, MutableRefObject, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -24,7 +25,14 @@ import RecordService from "@/services/record.service";
 import useRafoUser from "@/hooks/useRafoUser";
 import useRafoUsers from "@/hooks/useRafoUsers";
 import Image from "next/image"; // Usar Image de Next.js
-import ThreeMap from "@/components/ThreeMap";
+import { Game } from "@/components/ThreeMap/domain/game";
+import { $moveChar } from "@/components/ThreeMap/movement";
+
+// Importa dinámicamente el componente ThreeMap
+const ThreeMap = dynamic(() => import("@/components/ThreeMap"), {
+  ssr: true,
+  loading: () => <p>Loading map...</p>,
+});
 
 type RafoBook = {
   cover: string;
@@ -36,8 +44,8 @@ type RafoBook = {
 };
 
 export default function Home() {
-  const threeRef = useRef(null);
   const [selectedOption, setSelectedOption] = useState<string>("pagesRead");
+  const gameRef: MutableRefObject<Game | null> = useRef(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [openDialog, setOpenDialog] = useState(false);
   const { accessToken, user } = useRafoUser();
@@ -47,7 +55,6 @@ export default function Home() {
   const handleSelectChange = (value: string) => {
     setSelectedOption(value);
   };
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
@@ -90,8 +97,9 @@ export default function Home() {
       }
 
       const { UserBookData, User } = resp.body;
-      if (threeRef.current) {
-        (threeRef.current as { moveChar(a: object, b: object): void }).moveChar(
+      if (gameRef.current) {
+        $moveChar(
+          gameRef.current,
           UserBookData.book.sortIndex,
           UserBookData.advanceRatio
         );
@@ -158,7 +166,7 @@ export default function Home() {
         <p>You must add the total pages of the next book to proceed.</p>
       ) : users && myId ? (
         <>
-          <ThreeMap ref={threeRef} users={users} myId={myId} />
+          <ThreeMap gameRef={gameRef} users={users} myId={myId} />
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
               <Button className="fixed bottom-4 right-4 bg-blue-500 text-white py-2 px-4 rounded-full shadow-md">
